@@ -1,0 +1,38 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { MyContext } from '../context/MyContext';
+
+function TableContent() {
+  const { planetsResult } = useContext(MyContext);
+  const [planets, newPlanets] = useState([]);
+
+  useEffect(() => {
+    const allPlanets = async () => {
+      const results = await planetsResult();
+      newPlanets(results);
+    };
+    allPlanets();
+  }, [planetsResult]);
+  return (
+    <tbody>
+      {planets.map((planet) => (
+        <tr key={ planet.created }>
+          <td>{planet.name}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.population}</td>
+          <td>{planet.films}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.url}</td>
+        </tr>
+      ))}
+    </tbody>
+  );
+}
+
+export default TableContent;
