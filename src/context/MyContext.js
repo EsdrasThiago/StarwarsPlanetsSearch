@@ -9,8 +9,18 @@ const planetsResult = async () => {
   return results;
 };
 
+// const [name, setName] = useState('');
+
+const handleChange = (event) => {
+  const { target } = event;
+  event.preventDefault();
+  setName(target.value);
+};
+
 const contextValue = {
   planetsResult,
+  // name,
+  handleChange,
 };
 
 function Provider({ children }) {
@@ -22,7 +32,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.objectOf.isRequired,
+  children: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 export default Provider;

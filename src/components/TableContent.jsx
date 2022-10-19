@@ -16,7 +16,7 @@ function TableContent() {
     <tbody>
       {planets.map((planet) => (
         <tr key={ planet.created }>
-          <td>{planet.name}</td>
+          <td value={ planet.name }>{planet.name}</td>
           <td>{planet.rotation_period}</td>
           <td>{planet.orbital_period}</td>
           <td>{planet.diameter}</td>
