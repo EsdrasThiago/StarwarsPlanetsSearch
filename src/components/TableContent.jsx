@@ -5,10 +5,6 @@ function TableContent() {
   const contexto = useContext(MyContext);
   const { planets, name, filter, filtered } = contexto;
 
-  // useEffect(() => {
-
-  // }, [name]);
-
   return (
     <tbody>
       {filtered ? filter.filter((el) => el.name.includes(name))

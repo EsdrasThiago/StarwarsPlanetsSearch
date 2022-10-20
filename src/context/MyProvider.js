@@ -42,6 +42,7 @@ function Provider({ children }) {
       }
     });
     setFilter(filtrado);
+    setPlanets(filtrado);
     setFiltered(true);
   };
 
@@ -74,7 +75,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.func).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;
