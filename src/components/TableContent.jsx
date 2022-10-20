@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { MyContext } from '../context/MyContext';
+import React, { useContext } from 'react';
+import MyContext from '../context/MyContext';
 
 function TableContent() {
-  const { planetsResult } = useContext(MyContext);
-  const [planets, newPlanets] = useState([]);
+  const contexto = useContext(MyContext);
+  const { planets, name } = contexto;
 
-  useEffect(() => {
-    const allPlanets = async () => {
-      const results = await planetsResult();
-      newPlanets(results);
-    };
-    allPlanets();
-  }, [planetsResult]);
+  // useEffect(() => {
+
+  // }, [name]);
+
   return (
     <tbody>
-      {planets.map((planet) => (
+      {planets?.filter((el) => el.name.includes(name)).map((planet) => (
         <tr key={ planet.created }>
           <td value={ planet.name }>{planet.name}</td>
           <td>{planet.rotation_period}</td>
