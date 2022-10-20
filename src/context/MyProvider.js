@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 import getPlanets from '../services/PlanetAPI';
@@ -20,11 +20,11 @@ function Provider({ children }) {
     planetsResult();
   }, []);
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     planets,
     name,
     handleName,
-  };
+  }), [name, planets]);
 
   return (
     <MyContext.Provider value={ contextValue }>
