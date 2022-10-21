@@ -3,6 +3,9 @@ import MyContext from '../context/MyContext';
 
 function Filters() {
   const contexto = useContext(MyContext);
+  function deletColumn() {
+    // target.value.remove();
+  }
   const { name,
     value,
     handleName,
@@ -22,8 +25,9 @@ function Filters() {
       <select
         data-testid="column-filter"
         onChange={ handleColumn }
+        onClick={ deletColumn }
       >
-        <option value="population">population</option>
+        <option value="population" id="oi">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>

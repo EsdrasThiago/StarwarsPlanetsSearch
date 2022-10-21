@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
+  const [columnIndex, setColumnIndex] = useState(0);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState(planets);
@@ -14,6 +15,7 @@ function Provider({ children }) {
 
   const handleColumn = ({ target }) => {
     setColumn(target.value);
+    setColumnIndex(target.selectedIndex);
   };
 
   const handleComparison = ({ target }) => {
@@ -33,7 +35,7 @@ function Provider({ children }) {
     setPlanets(results);
   };
 
-  const handleButton = () => {
+  const handleButton = (event) => {
     const filtrado = planets.filter((e) => {
       switch (comparison) {
       case 'maior que': return Number(e[column]) > Number(value);
@@ -44,9 +46,17 @@ function Provider({ children }) {
     setFilter(filtrado);
     setPlanets(filtrado);
     setFiltered(true);
+    console.log(event.nativeEvent.path[1][1]);
+    console.log(column);
+    return event.nativeEvent.path[1][1][columnIndex].remove();
   };
 
-  const filterCallback = useCallback(handleButton, [planets, comparison, value, column]);
+  const filterCallback = useCallback(handleButton, [planets,
+    comparison,
+    value,
+    column,
+    columnIndex,
+  ]);
 
   useEffect(() => {
     planetsResult();
