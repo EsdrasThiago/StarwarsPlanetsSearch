@@ -21,27 +21,28 @@ function Provider({ children }) {
 
   const handleFilters = (event) => {
     const { target } = event;
-    const { value: comparisonFilter, id: valueFilter, name: columnFilter } = target;
-    const deletedValues = originalPlanets.filter((e) => {
-      switch (comparisonFilter) {
-      case 'maior que': return Number(e[columnFilter]) > Number(valueFilter) ? null : e;
-      case 'menor que': return Number(e[columnFilter]) < Number(valueFilter) ? null : e;
-      default: return Number(e[columnFilter]) === Number(valueFilter) ? null : e;
-      }
-    });
-    const allValues = [...filter, ...deletedValues];
-    // const filtredValues = deletedValues.filter((e) => delets.filter((el) => {
-    //   switch (el.comparison) {
-    //   case 'maior que': return console.log(el.column, el.comparison, el.value);
-    //   case 'menor que': return Number(e[el.column]) < Number(el.value);
-    //   default: return Number(e[el.column]) === Number(el.value);
-    //   }
-    // }));
-    const removeRepeatedValues = allValues.filter((el, i) => allValues.indexOf(el) === i);
-    setPlanets(removeRepeatedValues);
-    setFilter(removeRepeatedValues);
+    const { name: columnFilter } = target;
+    const deletedColumn = delets.filter((e) => (e.column === columnFilter ? null : e));
+    const finalArray = [];
+    setDelets(deletedColumn);
+    if (deletedColumn.length > 0) {
+      deletedColumn.filter((el) => {
+        const filtredDelets = originalPlanets.filter((e) => {
+          switch (el.comparison) {
+          case 'maior que': return Number(e[el.column]) > Number(el.value) && e;
+          case 'menor que': return Number(e[el.column]) < Number(el.value) && e;
+          default: return Number(e[el.column]) === Number(el.value) && e;
+          }
+        });
+        return finalArray.push(filtredDelets);
+      });
+      setPlanets(finalArray[0]);
+      setFilter(finalArray[0]);
+    } else {
+      setFilter(originalPlanets);
+      setPlanets(originalPlanets);
+    }
     setColumnOptions([...columnOptions, target.name]);
-    event.nativeEvent.path[1].remove();
   };
 
   const handleComparison = ({ target }) => {
@@ -74,6 +75,7 @@ function Provider({ children }) {
     const columnDeleted = columnOptions.filter((e) => e !== column);
     setColumnOptions(columnDeleted);
     setDelets([...delets, filtredArray]);
+    setColumn(columnOptions[0]);
     setFilter(filtrado);
     setPlanets(filtrado);
     setFiltered(true);
@@ -103,7 +105,7 @@ function Provider({ children }) {
   const clearCallback = useCallback(clearAll, [originalPlanets]);
 
   const columnCallback = useCallback(handleFilters, [originalPlanets,
-    filter,
+    delets,
     columnOptions]);
 
   const filterCallback = useCallback(handleButton, [planets,
